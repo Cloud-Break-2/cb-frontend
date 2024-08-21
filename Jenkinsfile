@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    tools {
+        nodejs "node22"
+    }
     stages {
         stage('Build') {
             steps {
@@ -10,13 +13,7 @@ pipeline {
                 sh 'ls'
             }
         }
-        stage('S3 Upload') {
-            steps {
-                withAWS(region: 'ap-northeast-2', credentials: 'aws-credentials') {
-                    sh 'ls -la build'
-                    sh 'aws s3 cp build s3://jenkins-react-sk/ --recursive'
-                }
-            }
-        }
+      
     }
 }
+
