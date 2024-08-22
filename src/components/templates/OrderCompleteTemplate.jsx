@@ -7,15 +7,14 @@ const OrderCompleteTemplate = ({ data }) => {
   const orderId = data?.data?.response?.id;
   const products = data?.data?.response?.products;
   const totalPrice = data?.data?.response?.totalPrice;
+
   const OrderItems = ({ products }) => {
     return products?.map((item) => {
-      // 해당 상품의 모든 옵션의 상품 수가 0이지 않을 경우에만 표현
-      if (!item?.items.every((option) => option.quantity === 0))
+      if (item?.items.some((option) => option.quantity !== 0)) {
         return (
           <div
             key={item.productName}
-            className="border rounded bg-white p-4 my-2"
-          >
+            className="border rounded bg-white p-4 my-2">
             {item.items.map((option) => {
               if (option.quantity !== 0) {
                 return (
@@ -37,11 +36,15 @@ const OrderCompleteTemplate = ({ data }) => {
                   </div>
                 );
               }
+              return null;
             })}
           </div>
         );
+      }
+      return null;
     });
   };
+
   return (
     <div className="w-[800px] py-10 mx-auto">
       <p className="text-center text-3xl">주문 완료</p>
@@ -63,13 +66,14 @@ const OrderCompleteTemplate = ({ data }) => {
         </span>
       </div>
       <div className="text-center py-10">
-        <button className="w-40 rounded px-5 py-2 bg-yellow-300 hover:bg-yellow-400">
-          <Link to={staticServerUri + "/"} className="text-lg">
-            쇼핑 계속하기
-          </Link>
-        </button>
+        <Link
+          to={staticServerUri + "/"}
+          className="w-40 rounded px-5 py-2 bg-yellow-300 hover:bg-yellow-400 text-lg inline-block">
+          쇼핑 계속하기
+        </Link>
       </div>
     </div>
   );
 };
+
 export default OrderCompleteTemplate;

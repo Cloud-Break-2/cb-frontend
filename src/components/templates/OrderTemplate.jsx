@@ -1,12 +1,11 @@
 import { useMutation } from "react-query";
 import { comma } from "../../utils/convert";
 import { order } from "../../services/api/order";
-import { Link, useNavigate } from "react-router-dom";
 import { useRef, useState } from "react";
 import logOut from "../../services/logout";
-import { BsTruck } from "react-icons/bs";
+import { BsTruck, BsFillQuestionSquareFill } from "react-icons/bs";
 import ErrorTypo from "../atoms/ErrorTypo";
-import { BsFillQuestionSquareFill } from "react-icons/bs";
+import { useNavigate } from "react-router-dom";
 
 const staticServerUri = process.env.REACT_APP_PATH || "";
 
@@ -21,8 +20,6 @@ const OrderTemplate = ({ data }) => {
   const allAgreeRef = useRef(null);
   const agreePaymentRef = useRef(null);
   const agreePolicyRef = useRef(null);
-
-  const route = useNavigate();
 
   const handleAllAgree = (e) => {
     const value = e.target.checked;
@@ -46,7 +43,7 @@ const OrderTemplate = ({ data }) => {
   const OrderItems = () => {
     return products?.map((item) => {
       // 해당 상품의 모든 옵션의 상품 수량이 0이라면 표현하지 않는다
-      if (!item?.carts.every((option) => option.quantity === 0))
+      if (!item?.carts.every((option) => option.quantity === 0)) {
         return (
           <div key={item.id} className="border rounded bg-white p-4 my-2">
             {item.carts.map((option) => {
@@ -62,7 +59,6 @@ const OrderTemplate = ({ data }) => {
                       alt=""
                     />
                     <div className="product-info">
-                      {/* 상품 이름, CSS와 항상 바인딩이 될 필요는 없다. 직관적 이해에 도움을 주도록 사용할 수 있다 */}
                       <div className="product-name-option-quantity">
                         <p className="font-semibold">{item.productName}</p>
                         <span className="text-sm">
@@ -79,6 +75,7 @@ const OrderTemplate = ({ data }) => {
                   </div>
                 );
               }
+              return null; // Ensure a value is returned
             })}
             <hr />
             <div className="pt-4 text-center text-blue-500">
@@ -87,10 +84,13 @@ const OrderTemplate = ({ data }) => {
             </div>
           </div>
         );
+      }
+      return null; // Ensure a value is returned
     });
   };
 
   if (!!!products) return <ErrorTypo />;
+
   return (
     <div className="pt-[15px] pb-[50px] bg-[#F4F4F4] bg-opacity-70">
       <div className="block mx-auto max-w-[870px] w-full ">
@@ -107,14 +107,12 @@ const OrderTemplate = ({ data }) => {
               <div className="flex w-fit mx-auto my-4">
                 <button
                   className="w-[100px] mx-2 px-3 py-2 rounded border border-neutral-300 bg-white"
-                  onClick={() => route(-1)}
-                >
+                  onClick={() => navigate(-1)}>
                   <span className="text-sm text-black">이전화면</span>
                 </button>
                 <button
                   className="w-[100px] mx-2 px-3 py-2 rounded bg-black"
-                  onClick={() => route(staticServerUri + "/")}
-                >
+                  onClick={() => navigate(staticServerUri + "/")}>
                   <span className="text-sm text-white">쇼핑하기 홈</span>
                 </button>
               </div>
@@ -123,14 +121,14 @@ const OrderTemplate = ({ data }) => {
         ) : (
           <div>
             <div className="ship-info border rounded my-2 bg-white">
-              <div className=" p-4 pb-3">
+              <div className="p-4 pb-3">
                 <h1 className="text-xl font-bold">배송지 정보</h1>
               </div>
               <div className="user-ship-info flex flex-col gap-2 px-4 pb-4">
                 <div className="">
                   <h1 className="flex items-center gap-2 text-lg font-bold">
                     홍길동
-                    <span className=" text-blue-400 bg-blue-100 rounded text-xs p-1">
+                    <span className="text-blue-400 bg-blue-100 rounded text-xs p-1">
                       기본 배송지
                     </span>
                   </h1>
@@ -251,8 +249,7 @@ const OrderTemplate = ({ data }) => {
                     navigate(staticServerUri + `/order/complete/${id}`);
                   },
                 });
-              }}
-            >
+              }}>
               <span className="font-bold text-xl">
                 {comma(totalPrice)}원 결제하기
               </span>
@@ -264,4 +261,5 @@ const OrderTemplate = ({ data }) => {
     </div>
   );
 };
+
 export default OrderTemplate;

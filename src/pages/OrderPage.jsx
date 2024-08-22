@@ -8,7 +8,7 @@ const OrderTemplate = React.lazy(() =>
 );
 
 const OrderPage = () => {
-  const { data, error, isLoading } = useQuery("cart", getCart);
+  const { data } = useQuery("cart", getCart);
   return (
     <Suspense fallback={<Loader />}>
       <OrderTemplate data={data} />

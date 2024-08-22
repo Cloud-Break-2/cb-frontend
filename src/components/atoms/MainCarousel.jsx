@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { BsCaretLeftFill, BsCaretRightFill } from "react-icons/bs";
 
 const staticServerUri = process.env.REACT_APP_PATH || "";
@@ -18,11 +18,11 @@ const MainCarousel = () => {
     );
   };
 
-  const handleNextSlide = () => {
+  const handleNextSlide = useCallback(() => {
     setActiveIndex((prevIndex) =>
       prevIndex === images.length - 1 ? 0 : prevIndex + 1
     );
-  };
+  }, [images.length]);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -32,7 +32,7 @@ const MainCarousel = () => {
     return () => {
       clearInterval(interval); // 컴포넌트가 언마운트될 때 타이머 해제
     };
-  }, [activeIndex]);
+  }, [handleNextSlide]); // handleNextSlide를 의존성 배열에 추가
 
   return (
     <div className="relative">
@@ -42,8 +42,7 @@ const MainCarousel = () => {
             key={index}
             className={`${
               index === activeIndex ? "opacity-100 z-10" : "opacity-0 z-0"
-            } absolute top-0 left-0 w-full h-full transition-opacity duration-500 ease-in-out`}
-          >
+            } absolute top-0 left-0 w-full h-full transition-opacity duration-500 ease-in-out`}>
             <img
               src={staticServerUri + image}
               alt={`Slide ${index + 1}`}
@@ -67,15 +66,13 @@ const MainCarousel = () => {
 
       <button
         className="absolute z-10 top-1/2 left-40 transform -translate-y-1/2 p-2 bg-gray-800 text-white rounded-full text-2xl opacity-40 hover:opacity-80"
-        onClick={handlePrevSlide}
-      >
+        onClick={handlePrevSlide}>
         <BsCaretLeftFill />
       </button>
 
       <button
         className="absolute z-10 top-1/2 right-40 transform -translate-y-1/2 p-2 bg-gray-800 text-white rounded-full text-2xl opacity-40 hover:opacity-80"
-        onClick={handleNextSlide}
-      >
+        onClick={handleNextSlide}>
         <BsCaretRightFill />
       </button>
     </div>

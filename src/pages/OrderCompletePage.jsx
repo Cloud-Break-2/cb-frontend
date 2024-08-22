@@ -11,7 +11,7 @@ const OrderCompleteTemplate = React.lazy(() =>
 
 const OrderCompletePage = () => {
   const { id } = useParams();
-  const { data, error, isLoading } = useQuery("order-check", () => {
+  const { data, error } = useQuery("order-check", () => {
     return getOrderFromId(id);
   });
   return !error ? (

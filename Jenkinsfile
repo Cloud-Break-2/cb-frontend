@@ -27,7 +27,7 @@ pipeline {
             withAWS(region: 'ap-northeast-2', credentials: 'aws-credentials') {
             sh 'ls -la build'
             sh 'aws s3 sync build s3://jenkins-react-sk/ --delete'
-           // sh 'aws cloudfront create-invalidation --distribution-id E32BFE6SSECM0S --paths "/*"'
+           sh 'aws cloudfront create-invalidation --distribution-id E1E9J54E7UNS4D --paths "/*"'
         }
         }   
 }
