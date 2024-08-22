@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage ('Git Clone'){ 
         	steps { 
-            	git branch: BRANCH, 
+            	git branch: mian, 
                 credentialsId: 'chaeminseok', 
                 url: 'https://github.com/Cloud-Break-2/cb-frontend.git' 
             } 
