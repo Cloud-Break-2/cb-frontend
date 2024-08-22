@@ -24,7 +24,7 @@ pipeline {
         }
         stage('S3 Upload') {
             steps {
-            sh 'aws s3 sync build s3://jenkins-react-sk/ --delete'
+            sh 'aws s3 sync build s3://jenkins-react-sk --delete'
            sh 'aws cloudfront create-invalidation --distribution-id E1E9J54E7UNS4D --paths "/*"'
         }   
 }
