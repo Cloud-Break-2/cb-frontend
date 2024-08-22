@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage ('Git Clone'){ 
         	steps { 
-            	git branch: BRANCH, 
+            	git branch: 'main', 
                 credentialsId: 'chaeminseok', 
                 url: 'https://github.com/Cloud-Break-2/cb-frontend.git' 
             } 
@@ -26,7 +26,7 @@ pipeline {
             steps {
             withAWS(region: 'ap-northeast-2', credentials: 'aws-credentials') {
             sh 'ls -la build'
-            sh 'aws s3 cp build s3://jenkins-react-sk/ --recursive'
+            sh 'aws s3 sync build s3://jenkins-react-sk/ --delete'
             // sh 'aws cloudfront create-invalidation --distribution-id E32BFE6SSECM0S --paths "/*"'
         }
     }
