@@ -37,7 +37,7 @@ const Popup = ({ isOpen, onClose }) => {
   //   localStorage.setItem("dontShowDate", today);
   //   onClose();
   // };|
-  s;
+
   return (
     <div className="modal-overlay" onClick={handleOverlayClick}>
       <div className="modal-container" onClick={(e) => e.stopPropagation()}>
