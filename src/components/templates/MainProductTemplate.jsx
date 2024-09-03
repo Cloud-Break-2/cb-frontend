@@ -61,7 +61,7 @@ const MainProductTemplate = () => {
   if (error) {
     return <ErrorTypo />;
   }
-
+  const
   return (
     <Container className="w-full px-24 py-16 m-auto">
       <ProductGrid products={products} isLoading={isLoading} />
