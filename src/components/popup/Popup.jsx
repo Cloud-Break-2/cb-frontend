@@ -51,7 +51,7 @@ const Popup = ({ isOpen, onClose }) => {
           allowFullScreen></iframe>
         <div className="kakao-button-wrapper">
           <div className="kakao-button" onClick={onClickEventPage}>
-            네고왕 X 카카오 이벤트 바로가기
+            네고왕왕 X 카카오 이벤트 바로가기
           </div>
         </div>
         <div className="today-button" onClick={onClose}>

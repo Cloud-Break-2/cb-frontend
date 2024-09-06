@@ -48,12 +48,10 @@ const EventPage = () => {
     const userId = 1; // 예시로 하드코딩된 사용자 ID. 실제로는 로그인된 사용자 ID를 사용해야 합니다.
 
     if (token) {
-      alert("로그인 후 이용 가능합니다");
-      window.location.href = "/login"; // 로그인 페이지의 경로로 변경하세요
     } else {
       try {
         const response = await fetch(
-          `${process.env.REACT_APP_API_COUPON_URL}`,
+          `${process.env.REACT_APP_API_COUPON_URL}/v1/issue`,
           {
             method: "POST",
             headers: {
@@ -70,8 +68,7 @@ const EventPage = () => {
           throw new Error("네트워크 응답이 올바르지 않습니다.");
         }
 
-        const data = await response.json();
-        alert(`네고왕 X 카카오쇼핑 ${data.amount}원 쿠폰이 발급되었습니다.`);
+        alert(`네고왕 X 카카오쇼핑 쿠폰이 발급되었습니다.`);
       } catch (error) {
         alert(`쿠폰 발급에 실패했습니다: ${error.message}`);
       }
