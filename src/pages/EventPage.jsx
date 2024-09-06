@@ -47,22 +47,25 @@ const EventPage = () => {
     const token = getCookieValue("token");
     const userId = 1; // 예시로 하드코딩된 사용자 ID. 실제로는 로그인된 사용자 ID를 사용해야 합니다.
 
-    if (!token) {
+    if (token) {
       alert("로그인 후 이용 가능합니다");
       window.location.href = "/login"; // 로그인 페이지의 경로로 변경하세요
     } else {
       try {
-        const response = await fetch("http://localhost:8080/v1/issue", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            userId: userId, // 사용자 ID
-            couponId: couponId, // 클릭한 쿠폰 ID
-          }),
-        });
-
+        const response = await fetch(
+          `${process.env.REACT_APP_API_COUPON_URL}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              userId: userId, // 사용자 ID
+              couponId: couponId, // 클릭한 쿠폰 ID
+            }),
+          }
+        );
+        console.log(response);
         if (!response.ok) {
           throw new Error("네트워크 응답이 올바르지 않습니다.");
         }
