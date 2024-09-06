@@ -56,6 +56,8 @@ const EventPage = () => {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
+              Accept: "*/*", // 명시적으로 추가
+              Connection: "keep-alive", // 필요시 추가
             },
             body: JSON.stringify({
               userId: userId, // 사용자 ID
